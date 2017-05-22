@@ -23,10 +23,20 @@ class Node
      */
     private $childNodes = [];
 
+    /**
+     * @var Node|null
+     */
+    private $parent;
+
     public function __construct(string $directory, Content $content)
     {
         $this->directory = rtrim($directory, '/');
         $this->content = $content;
+    }
+
+    public function category(): string
+    {
+        return Inflector::pluralize($this->label());
     }
 
     public function directory()
@@ -41,6 +51,7 @@ class Node
     public function addChild(Node $child): void
     {
         $this->childNodes[] = $child;
+        $child->parent = $this;
     }
 
     /**
@@ -54,7 +65,10 @@ class Node
         }
     }
 
-    public function childNodes()
+    /**
+     * @return array|Node[]
+     */
+    public function childNodes(): array
     {
         return $this->childNodes;
     }
@@ -66,7 +80,7 @@ class Node
 
     public function tag(): string
     {
-        return $this->dirName();
+        return ($this->parent instanceof Node ? $this->parent->tag() . '_' : '') . $this->dirName();
     }
 
     public function label(): string
@@ -89,5 +103,21 @@ class Node
         $parts = explode('\\', get_class($this));
 
         return end($parts);
+    }
+
+    public function childrenGroupedByType(): array
+    {
+        $result = [];
+
+        foreach ($this->childNodes as $childNode) {
+            $result[get_class($childNode)][] = $childNode;
+        }
+
+        return $result;
+    }
+
+    public function hasChildren(): bool
+    {
+        return count($this->childNodes) > 0;
     }
 }

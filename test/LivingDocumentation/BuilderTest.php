@@ -6,7 +6,9 @@ use Fixtures\Fixtures;
 use LivingDocumentation\Content\MarkdownFile;
 use LivingDocumentation\Content\Nothing;
 use LivingDocumentation\Plugin\Application\Application;
-use LivingDocumentation\Plugin\BoundedContexts\BoundedContext;
+use LivingDocumentation\Plugin\Application\ApplicationCollector;
+use LivingDocumentation\Plugin\BoundedContext\BoundedContext;
+use LivingDocumentation\Plugin\BoundedContext\BoundedContextCollector;
 use PHPUnit\Framework\TestCase;
 
 final class BuilderTest extends TestCase
@@ -16,7 +18,10 @@ final class BuilderTest extends TestCase
      */
     public function it_builds_the_correct_node_tree()
     {
-        $builder = new Builder();
+        $builder = new Builder([
+            new ApplicationCollector(),
+            new BoundedContextCollector()
+        ]);
 
         $result = $builder->buildNodeTree(Fixtures::dir() . '/src/');
 

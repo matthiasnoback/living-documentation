@@ -1,6 +1,6 @@
 <?php
 
-namespace LivingDocumentation\Plugin\BoundedContexts;
+namespace LivingDocumentation\Plugin\BoundedContext;
 
 use LivingDocumentation\Content\Nothing;
 use PHPUnit\Framework\TestCase;

@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace LivingDocumentation\Plugin\BoundedContexts;
+namespace LivingDocumentation\Plugin\BoundedContext;
 
 use LivingDocumentation\Node;
 

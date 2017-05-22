@@ -1,1 +1,1 @@
-# Meetup Organizing
+Everything related to scheduling, rescheduling and cancelling meetups.

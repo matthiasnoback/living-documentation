@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace LivingDocumentation\Plugin\BoundedContexts;
+namespace LivingDocumentation\Plugin\BoundedContext;
 
 use LivingDocumentation\Content\Content;
 use LivingDocumentation\Content\MarkdownFile;
@@ -10,7 +10,7 @@ use LivingDocumentation\Node;
 use LivingDocumentation\NodeCollector;
 use LivingDocumentation\Plugin\Application\Application;
 
-final class BoundedContextsCollector implements NodeCollector
+final class BoundedContextCollector implements NodeCollector
 {
     public function collect(Node $node): array
     {

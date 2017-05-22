@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace LivingDocumentation;
 
 use LivingDocumentation\Plugin\Application\ApplicationCollector;
-use LivingDocumentation\Plugin\BoundedContexts\BoundedContextsCollector;
+use LivingDocumentation\Plugin\BoundedContext\BoundedContextCollector;
 
 final class Builder
 {
@@ -13,12 +13,12 @@ final class Builder
      */
     private $collectors;
 
-    public function __construct()
+    /**
+     * @param array|NodeCollector[] $collectors
+     */
+    public function __construct(array $collectors)
     {
-        $this->collectors = [
-            new ApplicationCollector(),
-            new BoundedContextsCollector()
-        ];
+        $this->collectors = $collectors;
     }
 
     public function buildNodeTree(string $srcDirectory): Node
