@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace LivingDocumentation\Output;
 
 use LivingDocumentation\Content\ContentRenderer;
+use LivingDocumentation\File;
 use LivingDocumentation\Node;
 
 /**
@@ -81,6 +82,10 @@ final class SingleHtmlPageRenderer implements NodeRenderer
         $result .= '<a name="' . $rootNode->tag() . '"></a>';
 
         $result .= '<h1>' . $rootNode->title() . '</h1>';
+
+        if ($rootNode instanceof File) {
+            $result .= '<p><a href="phpstorm://open?file=' . urlencode($rootNode->path()) . '" class="" title="Open related file in IDE">...</a></p>';
+        }
 
         $result .= $this->renderer->render($rootNode->content());
 
