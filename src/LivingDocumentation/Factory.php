@@ -18,6 +18,8 @@ use LivingDocumentation\Output\SingleHtmlPageRenderer;
 use LivingDocumentation\Plugin\Glossary\GlossaryCollector;
 use LivingDocumentation\Plugin\Glossary\GlossaryEntry;
 use LivingDocumentation\Plugin\Glossary\GlossaryEntryContentRenderer;
+use LivingDocumentation\Plugin\HexagonalArchitecture\AdapterCollector;
+use LivingDocumentation\Plugin\HexagonalArchitecture\PortCollector;
 use Michelf\Markdown;
 
 final class Factory
@@ -27,7 +29,9 @@ final class Factory
         return new Builder([
             new ApplicationCollector(),
             new BoundedContextCollector(),
-            new GlossaryCollector(new AnnotationReader())
+            new PortCollector(),
+            new AdapterCollector(),
+            new GlossaryCollector(new AnnotationReader()),
         ]);
     }
 

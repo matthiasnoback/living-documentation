@@ -16,7 +16,8 @@
         "graphp/graphviz": "^0.2.1",
         "doctrine/inflector": "^1.1",
         "phpdocumentor/reflection-docblock": "^2.0",
-        "roave/better-reflection": "^1.2"
+        "roave/better-reflection": "^1.2",
+        "alom/graphviz": "^1.1"
     },
     "autoload": {
         "psr-4": {

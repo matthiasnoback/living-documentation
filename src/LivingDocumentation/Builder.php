@@ -26,9 +26,9 @@ final class Builder
         $sourceRoot = new SourceRoot($srcDirectory);
 
         $loopOverNodes = [$sourceRoot];
+        $collectedNodes = [];
 
         foreach ($this->collectors as $collector) {
-            $collectedNodes = [];
             foreach ($loopOverNodes as $node) {
                 $childNodes = $collector->collect($node);
                 $node->addChildren($childNodes);
