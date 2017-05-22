@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace LivingDocumentation\Content;
 
@@ -11,10 +12,21 @@ final class DelegatingRendererTest extends TestCase
      */
     public function it_delegates_to_the_appropriate_renderer()
     {
-        $renderer = new DelegatingRenderer();
+        $content = $this->createMock(Content::class);
+        $contentRenderer = $this->createMock(ContentRenderer::class);
+        $renderedContent = 'The rendered content';
+        $contentRenderer
+            ->expects($this->any())
+            ->method('render')
+            ->with($this->identicalTo($content))
+            ->will($this->returnValue($renderedContent));
+        $delegatingContentRenderer = new DelegatingContentRenderer([
+            get_class($content) => $contentRenderer,
+            'SomeOtherContentClass' => $this->createMock(ContentRenderer::class)
+        ]);
 
-        $result = $renderer->render(new MarkdownFile(__DIR__ . '/Fixtures/dummy.md'));
+        $result = $delegatingContentRenderer->render($content);
 
-        $this->assertEquals('<h1>Dummy</h1>', trim($result));
+        $this->assertEquals($renderedContent, $result);
     }
 }

@@ -1,13 +1,11 @@
 <?php
 
-require __DIR__ . '/../vendor/autoload.php';
+use Fixtures\Fixtures;
+use LivingDocumentation\Factory;
 
-$node = (new \LivingDocumentation\Builder([
-    new \LivingDocumentation\Plugin\Application\ApplicationCollector(),
-    new \LivingDocumentation\Plugin\BoundedContext\BoundedContextCollector()
-]))->buildNodeTree(\Fixtures\Fixtures::dir() . '/src/');
+require __DIR__ . '/../bootstrap.php';
 
-$contentRenderer = new \LivingDocumentation\Content\DelegatingRenderer();
-$renderer = new \LivingDocumentation\Output\SingleHtmlPageRenderer($contentRenderer);
+$node = Factory::createBuilder()->buildNodeTree(Fixtures::dir() . '/src/');
+$renderer = Factory::createRenderer();
 
 echo $renderer->render($node);

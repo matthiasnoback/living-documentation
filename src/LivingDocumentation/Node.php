@@ -11,7 +11,7 @@ class Node
     /**
      * @var string
      */
-    private $directory;
+    private $path;
 
     /**
      * @var Content
@@ -28,9 +28,9 @@ class Node
      */
     private $parent;
 
-    public function __construct(string $directory, Content $content)
+    public function __construct(string $path, Content $content)
     {
-        $this->directory = rtrim($directory, '/');
+        $this->path = rtrim($path, '/');
         $this->content = $content;
     }
 
@@ -39,9 +39,9 @@ class Node
         return Inflector::pluralize($this->label());
     }
 
-    public function directory()
+    public function path(): string
     {
-        return $this->directory;
+        return $this->path;
     }
 
     /**
@@ -80,7 +80,7 @@ class Node
 
     public function tag(): string
     {
-        return ($this->parent instanceof Node ? $this->parent->tag() . '_' : '') . $this->dirName();
+        return ($this->parent instanceof Node ? $this->parent->tag() . '_' : '') . $this->fileNameWithoutExtension();
     }
 
     public function label(): string
@@ -90,12 +90,12 @@ class Node
 
     public function title(): string
     {
-        return Inflector::ucwords($this->dirName());
+        return Inflector::ucwords($this->fileNameWithoutExtension());
     }
 
-    private function dirName()
+    private function fileNameWithoutExtension()
     {
-        return basename($this->directory);
+        return pathinfo($this->path, PATHINFO_FILENAME);
     }
 
     private function className()

@@ -3,20 +3,20 @@ declare(strict_types=1);
 
 namespace LivingDocumentation\Output;
 
-use LivingDocumentation\Content\Renderer;
+use LivingDocumentation\Content\ContentRenderer;
 use LivingDocumentation\Node;
 
 /**
  * @todo use Twig
  */
-final class SingleHtmlPageRenderer
+final class SingleHtmlPageRenderer implements NodeRenderer
 {
     /**
-     * @var Renderer
+     * @var ContentRenderer
      */
     private $renderer;
 
-    public function __construct(Renderer $renderer)
+    public function __construct(ContentRenderer $renderer)
     {
         $this->renderer = $renderer;
     }

@@ -3,19 +3,19 @@ declare(strict_types=1);
 
 namespace LivingDocumentation\Content;
 
-final class DelegatingRenderer implements Renderer
+final class DelegatingContentRenderer implements ContentRenderer
 {
     /**
-     * @var array|Renderer[]
+     * @var array|ContentRenderer[]
      */
     private $renderers;
 
-    public function __construct()
+    /**
+     * @param array|ContentRenderer[] $renderers
+     */
+    public function __construct(array $renderers)
     {
-        $this->renderers = [
-            MarkdownFile::class => new MarkdownFileRenderer(),
-            Nothing::class => new NothingRenderer()
-        ];
+        $this->renderers = $renderers;
     }
 
     public function render(Content $content): string

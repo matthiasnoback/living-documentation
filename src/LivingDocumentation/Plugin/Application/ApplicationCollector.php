@@ -18,7 +18,7 @@ final class ApplicationCollector implements NodeCollector
             return [];
         }
 
-        $applicationDirectories = glob($node->directory() . '/*/', GLOB_ONLYDIR);
+        $applicationDirectories = glob($node->path() . '/*/', GLOB_ONLYDIR);
 
         return array_map([$this, 'mapToApplicationNodes'], $applicationDirectories);
     }

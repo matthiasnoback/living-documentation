@@ -18,7 +18,7 @@ final class BoundedContextCollector implements NodeCollector
             return [];
         }
 
-        $boundedContextDirectories = glob($node->directory() . '/*/', GLOB_ONLYDIR);
+        $boundedContextDirectories = glob($node->path() . '/*/', GLOB_ONLYDIR);
 
         return array_map([$this, 'mapToBoundedContextNodes'], $boundedContextDirectories);
     }
