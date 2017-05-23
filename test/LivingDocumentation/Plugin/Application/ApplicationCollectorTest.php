@@ -19,18 +19,10 @@ final class ApplicationCollectorTest extends TestCase
 
         $result = $collector->collect(new SourceRoot(__DIR__ . '/Fixtures/src'));
 
-        $this->assertEquals(
-            [
-                new Application(
-                    __DIR__ . '/Fixtures/src/ImageProcessor',
-                    new Nothing()
-                ),
-                new Application(
-                    __DIR__ . '/Fixtures/src/Meetup',
-                    new MarkdownFile(__DIR__ . '/Fixtures/src/Meetup/Application.md')
-                )
-            ],
-            $result
-        );
+        $node1 = new Application(__DIR__ . '/Fixtures/src/ImageProcessor');
+        $node2 = new Application(__DIR__ . '/Fixtures/src/Meetup');
+        $node2->addContent(new MarkdownFile(__DIR__ . '/Fixtures/src/Meetup/Application.md'));
+
+        $this->assertEquals([$node1, $node2], $result);
     }
 }

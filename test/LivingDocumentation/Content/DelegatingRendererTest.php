@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace LivingDocumentation\Content;
 
+use LivingDocumentation\Node;
 use PHPUnit\Framework\TestCase;
 
 final class DelegatingRendererTest extends TestCase
@@ -25,7 +26,7 @@ final class DelegatingRendererTest extends TestCase
             'SomeOtherContentClass' => $this->createMock(ContentRenderer::class)
         ]);
 
-        $result = $delegatingContentRenderer->render($content);
+        $result = $delegatingContentRenderer->render($content, $this->createMock(Node::class));
 
         $this->assertEquals($renderedContent, $result);
     }

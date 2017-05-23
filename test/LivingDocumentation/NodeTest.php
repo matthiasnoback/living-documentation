@@ -32,6 +32,6 @@ final class NodeTest extends TestCase
 
     private function createSomeNode(): Node
     {
-        return new Node(__DIR__, new Nothing());
+        return new Node(__DIR__);
     }
 }

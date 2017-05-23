@@ -10,6 +10,6 @@ final class SomeOtherNodeType extends Node
 {
     public function __construct()
     {
-        parent::__construct('', new Nothing());
+        parent::__construct('');
     }
 }

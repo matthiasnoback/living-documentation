@@ -25,19 +25,18 @@ final class ApplicationCollector implements NodeCollector
 
     private function mapToApplicationNodes(string $applicationDirectory): Application
     {
-        return new Application(
-            $applicationDirectory,
-            $this->createContent($applicationDirectory)
-        );
+        $applicationNode = new Application($applicationDirectory);
+
+        $this->addContent($applicationNode, $applicationDirectory);
+
+        return $applicationNode;
     }
 
-    private function createContent(string $applicationDirectory): Content
+    private function addContent(Application $node, string $applicationDirectory): void
     {
         $markdownFilePath = $applicationDirectory . '/Application.md';
         if (is_file($markdownFilePath)) {
-            return new MarkdownFile(realpath($markdownFilePath));
+            $node->addContent(new MarkdownFile(realpath($markdownFilePath)));
         }
-
-        return new Nothing();
     }
 }

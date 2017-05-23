@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace LivingDocumentation\Content;
 
+use LivingDocumentation\Node;
+
 final class DelegatingContentRenderer implements ContentRenderer
 {
     /**
@@ -18,7 +20,7 @@ final class DelegatingContentRenderer implements ContentRenderer
         $this->renderers = $renderers;
     }
 
-    public function render(Content $content): string
+    public function render(Content $content, Node $node): string
     {
         if (!isset($this->renderers[get_class($content)])) {
             throw new \LogicException('No renderer known for content class');
@@ -26,6 +28,6 @@ final class DelegatingContentRenderer implements ContentRenderer
 
         $renderer = $this->renderers[get_class($content)];
 
-        return $renderer->render($content);
+        return $renderer->render($content, $node);
     }
 }

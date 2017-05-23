@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace LivingDocumentation\Content;
 
+use LivingDocumentation\Node;
+
 final class MarkdownContentRenderer implements ContentRenderer
 {
     /**
@@ -15,7 +17,7 @@ final class MarkdownContentRenderer implements ContentRenderer
         $this->markdownParser = $markdownParser;
     }
 
-    public function render(Content $content) : string
+    public function render(Content $content, Node $node) : string
     {
         if ($content instanceof MarkdownFile) {
             $markdown = file_get_contents($content->filePath());

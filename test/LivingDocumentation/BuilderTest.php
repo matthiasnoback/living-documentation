@@ -27,26 +27,19 @@ final class BuilderTest extends TestCase
         $result = $builder->buildNodeTree(Fixtures::dir() . '/src/');
 
         $expectedSourceRoot = new SourceRoot(Fixtures::dir() . '/src/');
-        $meetupApplication = new Application(
-            Fixtures::dir() . '/src/Meetup',
-            new MarkdownFile(Fixtures::dir() . '/src/Meetup/Application.md')
-        );
-        $meetupApplication->addChild(
-            new BoundedContext(Fixtures::dir() . '/src/Meetup/Identity', new Nothing())
-        );
-        $meetupApplication->addChild(
-            new BoundedContext(
-                Fixtures::dir() . '/src/Meetup/MeetupOrganizing',
-                new MarkdownFile(Fixtures::dir() . '/src/Meetup/MeetupOrganizing/BoundedContext.md')
-            )
-        );
-        $imageProcessorApplication = new Application(
-            Fixtures::dir() . '/src/ImageProcessor',
-            new Nothing()
-        );
-        $expectedSourceRoot->addChild($imageProcessorApplication);
 
-        $expectedSourceRoot->addChild($meetupApplication);
+        $meetupNode = new Application(Fixtures::dir() . '/src/Meetup');
+        $meetupNode->addContent(new MarkdownFile(Fixtures::dir() . '/src/Meetup/Application.md'));
+        $identityNode = new BoundedContext(Fixtures::dir() . '/src/Meetup/Identity');
+        $meetupNode->addChild($identityNode);
+        $meetupOrganizingNode = new BoundedContext(Fixtures::dir() . '/src/Meetup/MeetupOrganizing');
+        $meetupOrganizingNode->addContent(new MarkdownFile(Fixtures::dir() . '/src/Meetup/MeetupOrganizing/BoundedContext.md'));
+        $meetupNode->addChild($meetupOrganizingNode);
+
+        $imageProcessorNode = new Application(Fixtures::dir() . '/src/ImageProcessor');
+        $expectedSourceRoot->addChild($imageProcessorNode);
+
+        $expectedSourceRoot->addChild($meetupNode);
 
         $this->assertEquals($expectedSourceRoot, $result);
     }

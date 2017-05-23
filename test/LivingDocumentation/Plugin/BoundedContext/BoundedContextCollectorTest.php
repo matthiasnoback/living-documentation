@@ -19,15 +19,14 @@ final class BoundedContextCollectorTest extends TestCase
 
         $result = $collector->collect(new Application(__DIR__ . '/Fixtures/src/Meetup', new Nothing()));
 
-        $this->assertEquals([
-            new BoundedContext(
-                __DIR__ . '/Fixtures/src/Meetup/Identity',
-                new Nothing()
-            ),
-            new BoundedContext(
-                __DIR__ . '/Fixtures/src/Meetup/MeetupOrganizing',
-                new MarkdownFile(__DIR__ . '/Fixtures/src/Meetup/MeetupOrganizing/BoundedContext.md')
-            ),
-        ], $result);
+        $node1 = new BoundedContext(
+            __DIR__ . '/Fixtures/src/Meetup/Identity'
+        );
+        $node2 = new BoundedContext(
+            __DIR__ . '/Fixtures/src/Meetup/MeetupOrganizing'
+        );
+        $node2->addContent(new MarkdownFile(__DIR__ . '/Fixtures/src/Meetup/MeetupOrganizing/BoundedContext.md'));
+
+        $this->assertEquals([$node1, $node2], $result);
     }
 }

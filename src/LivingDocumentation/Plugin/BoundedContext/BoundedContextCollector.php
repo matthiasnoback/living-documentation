@@ -25,16 +25,18 @@ final class BoundedContextCollector implements NodeCollector
 
     private function mapToBoundedContextNodes(string $directory): BoundedContext
     {
-        return new BoundedContext($directory, $this->createContent($directory));
+        $node = new BoundedContext($directory);
+
+        $this->addContent($node, $directory);
+
+        return $node;
     }
 
-    private function createContent(string $directory): Content
+    private function addContent(BoundedContext $node, string $directory): void
     {
         $markdownFile = $directory . '/BoundedContext.md';
         if (is_file($markdownFile)) {
-            return new MarkdownFile(realpath($markdownFile));
+            $node->addContent(new MarkdownFile(realpath($markdownFile)));
         }
-
-        return new Nothing();
     }
 }

@@ -87,7 +87,10 @@ final class SingleHtmlPageRenderer implements NodeRenderer
             $result .= '<p><a href="phpstorm://open?file=' . urlencode($rootNode->path()) . '" class="" title="Open related file in IDE">...</a></p>';
         }
 
-        $result .= $this->renderer->render($rootNode->content());
+        foreach ($rootNode->content() as $content) {
+            // TODO wrap in div
+            $result .= $this->renderer->render($content, $rootNode);
+        }
 
         foreach ($rootNode->childrenGroupedByType() as $type => $childNodes) {
             /** @var Node[] $childNodes */

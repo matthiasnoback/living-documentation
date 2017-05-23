@@ -14,9 +14,9 @@ class Node
     private $path;
 
     /**
-     * @var Content
+     * @var array|Content[]
      */
-    private $content;
+    private $content = [];
 
     /**
      * @var array|Node[]
@@ -28,10 +28,14 @@ class Node
      */
     private $parent;
 
-    public function __construct(string $path, Content $content)
+    public function __construct(string $path)
     {
         $this->path = rtrim($path, '/');
-        $this->content = $content;
+    }
+
+    public function addContent(Content $content): void
+    {
+        $this->content[] = $content;
     }
 
     public function category(): string
@@ -73,7 +77,10 @@ class Node
         return $this->childNodes;
     }
 
-    public function content(): Content
+    /**
+     * @return array|Content[]
+     */
+    public function content(): array
     {
         return $this->content;
     }
@@ -119,5 +126,14 @@ class Node
     public function hasChildren(): bool
     {
         return count($this->childNodes) > 0;
+    }
+
+    public function findParentOfType(string $class): ?Node
+    {
+        if (!$this->parent instanceof Node) {
+            return null;
+        }
+
+        return $this->parent instanceof $class ? $this->parent : $this->parent->findParentOfType($class);
     }
 }

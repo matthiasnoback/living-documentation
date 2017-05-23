@@ -11,6 +11,7 @@ use LivingDocumentation\Node;
 use LivingDocumentation\NodeCollector;
 use LivingDocumentation\Plugin\BoundedContext\BoundedContext;
 use LivingDocumentation\Plugin\Glossary\Annotation\CoreConcept as CoreConceptAnnotation;
+use LivingDocumentation\Util\Classes;
 
 final class GlossaryCollector implements NodeCollector
 {
@@ -34,7 +35,7 @@ final class GlossaryCollector implements NodeCollector
         }
 
         $directory = $node->path();
-        $classNames = $this->findAllClassNamesWithinDirectory($directory);
+        $classNames = Classes::findWithinDirectory($directory);
 
         $newNodes = [];
 
@@ -52,23 +53,5 @@ final class GlossaryCollector implements NodeCollector
         }
 
         return $newNodes;
-    }
-
-    /**
-     * @param string $directory
-     * @return array|string[]
-     */
-    private function findAllClassNamesWithinDirectory(string $directory): array
-    {
-        $singleDirectorySourceLocator = new DirectoriesSourceLocator([$directory]);
-        $reflector = new ClassReflector($singleDirectorySourceLocator);
-
-        $reflectionClasses = $reflector->getAllClasses();
-
-        $classNames = array_map(function (ReflectionClass $reflectionClass) {
-            return $reflectionClass->getName();
-        }, $reflectionClasses);
-
-        return $classNames;
     }
 }

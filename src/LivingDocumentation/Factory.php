@@ -4,6 +4,8 @@ declare(strict_types=1);
 namespace LivingDocumentation;
 
 use Doctrine\Common\Annotations\AnnotationReader;
+use LivingDocumentation\Content\Graph;
+use LivingDocumentation\Content\GraphRenderer;
 use LivingDocumentation\Content\PhpMarkdownParser;
 use LivingDocumentation\Output\NodeRenderer;
 use LivingDocumentation\Plugin\Application\ApplicationCollector;
@@ -20,6 +22,7 @@ use LivingDocumentation\Plugin\Glossary\GlossaryEntry;
 use LivingDocumentation\Plugin\Glossary\GlossaryEntryContentRenderer;
 use LivingDocumentation\Plugin\HexagonalArchitecture\AdapterCollector;
 use LivingDocumentation\Plugin\HexagonalArchitecture\PortCollector;
+use LivingDocumentation\Plugin\HexagonalArchitecture\PortDiagramCollector;
 use Michelf\Markdown;
 
 final class Factory
@@ -31,6 +34,7 @@ final class Factory
             new BoundedContextCollector(),
             new PortCollector(),
             new AdapterCollector(),
+            new PortDiagramCollector(),
             new GlossaryCollector(new AnnotationReader()),
         ]);
     }
@@ -44,6 +48,7 @@ final class Factory
             Nothing::class => new NothingContentRenderer(),
             MarkdownFile::class => $markdownContentRenderer,
             MarkdownSnippet::class => $markdownContentRenderer,
+            Graph::class => new GraphRenderer(),
             GlossaryEntry::class => new GlossaryEntryContentRenderer($markdownParser)
         ]);
 

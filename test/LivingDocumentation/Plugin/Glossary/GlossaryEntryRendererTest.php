@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace LivingDocumentation\Plugin\Glossary;
 
 use LivingDocumentation\Content\PhpMarkdownParser;
+use LivingDocumentation\Node;
 use LivingDocumentation\Plugin\Glossary\Fixtures\MeetupOrganizing\Domain\Meetup;
 use Michelf\Markdown;
 use PHPUnit\Framework\TestCase;
@@ -21,11 +22,11 @@ EOD;
 
         $content = new GlossaryEntry(Meetup::class);
         $renderer = new GlossaryEntryContentRenderer(new PhpMarkdownParser(new Markdown()));
-        $renderer->render($content);
+        $renderer->render($content, $this->createMock(Node::class));
 
         $this->assertEquals(
             trim($expectedHtml),
-            trim($renderer->render($content))
+            trim($renderer->render($content, $this->createMock(Node::class)))
         );
     }
 }
