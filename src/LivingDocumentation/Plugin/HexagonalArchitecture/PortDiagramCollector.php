@@ -63,15 +63,15 @@ final class PortDiagramCollector implements NodeCollector
 
         $graph = new Digraph('H');
         $graph->attr('graph', ['label' => $port->title() . ' port']);
-        $graph->attr('node', ['shape' => 'box']);
+        $graph->attr('node', ['shape' => 'box', 'margin' => '0.3,0.2']);
 
         foreach ($coreInterfaces as $coreInterface) {
             $interfaceNode = $graph->beginNode(md5($coreInterface), ['label' => Classes::shortName($coreInterface), 'style' => 'dashed']);
             foreach ($adapterImplements[$coreInterface] as [$adapter, $adapterClass]) {
                 /** @var $adapter Adapter */
                 $adapterSubGraph = $graph->subgraph('cluster_' . $adapter->tag());
-                $adapterSubGraph->attr('graph', ['label' => $adapter->title() . ' adapter']);
-                $adapterSubGraph->attr('node', ['shape' => 'box']);
+                $adapterSubGraph->attr('graph', ['label' => $adapter->title() . ' adapter', 'style' => 'filled', 'fillcolor' => 'gray89']);
+                $adapterSubGraph->attr('node', ['shape' => 'box', 'style' => 'filled', 'fillcolor' => 'white']);
                 $adapterNode = $adapterSubGraph->beginNode(md5($adapterClass), ['label' => Classes::shortName($adapterClass)]);
                 $graph->edge([$adapterNode->getId(), $interfaceNode->getId()], ['style' => 'dashed', 'arrowhead' => 'empty']);
             }
